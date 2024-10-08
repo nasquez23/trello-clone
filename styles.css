@@ -1,0 +1,22 @@
+.header{
+    text-align: center;
+}
+
+.lists{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.lists div {
+    background-color: lightgray;
+    padding: 0 1rem;
+    margin-right: 1rem;
+    border-radius: 10px;
+}
+
+.lists .add-card-button{
+    background-color: lightgray;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
