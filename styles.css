@@ -1,22 +1,38 @@
-.header{
+.header {
     text-align: center;
 }
 
-.lists{
+button {
+    cursor: pointer;
+}
+
+.lists {
     display: flex;
     flex-direction: row;
     width: 100%;
 }
 
-.lists div {
+.lists > div {
     background-color: lightgray;
     padding: 0 1rem;
     margin-right: 1rem;
     border-radius: 10px;
 }
 
-.lists .add-card-button{
+.lists .toggle-input-btn {
+    display: "block";
     background-color: lightgray;
+    padding: 0.5rem 2rem 0.5rem 0.3rem;
+    border: none;
     margin-bottom: 1rem;
-    cursor: pointer;
+}
+
+.lists .toggle-input-btn:hover {
+    background-color: gray;
+    border-radius: 5px;
+}
+
+.input-section {
+    display: none;
+    flex-direction: column;
 }
