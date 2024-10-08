@@ -36,3 +36,7 @@ button {
     display: none;
     flex-direction: column;
 }
+
+.tasks-list {
+    padding: 0;
+}
