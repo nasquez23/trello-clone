@@ -1,0 +1,132 @@
+body {
+    background: linear-gradient(135deg, #6e7dff, #b5d0ff);
+    font-family: 'Montserrat', 'Trebuchet MS', sans-serif;
+}
+
+.header {
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.project-name {
+    font-size: 1.2rem;
+    color: white;
+    font-weight: bold;
+    padding: 1rem;
+    width: 100%;
+    background-color: #5A6BDF;
+    margin-bottom: 0.5rem;
+}
+
+button {
+    cursor: pointer;
+}
+
+.lists {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.lists > div {
+    background-color: whitesmoke;
+    padding: 0 1rem;
+    margin-right: 1rem;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.lists .toggle-input-btn {
+    width: 80%;
+    text-align: left;
+    display: "block";
+    background-color: whitesmoke;
+    padding: 0.5rem 2rem 0.5rem 0.3rem;
+    border: none;
+    margin: 0.5rem 0 1rem 0;
+    font-size: 0.9rem;
+}
+
+.lists .toggle-input-btn:hover {
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
+.input-section {
+    margin: 0.5rem 0;
+    display: none;
+    flex-direction: column;
+}
+
+.add-task-btn {
+    padding: 0.5rem 0.8rem;
+    border-radius: 5px;
+    border: none;
+    background-color: #1F51FF;
+    color: white;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.add-task-btn:hover {
+    background-color: #0047AB;
+}
+
+.close-btn {
+    border: none;
+    height: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    background-color: inherit;
+    font-size: 1rem;
+}
+
+.close-btn:hover {
+    background-color: lightgray;
+}
+
+.card-input {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+}
+
+.tasks-list {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sections {
+    height: 100%;
+}
+
+.sections p {
+    font-weight: bold;
+}
+
+.sections.dragover{
+    border: 2px solid lightblue;
+}
+
+.dragover {
+    background-color: black;
+}
+
+.tasks-list > div {
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.draggable {
+    border: 0.2px solid black;
+    cursor: move;
+}
+
+.draggable.dragging {
+    opacity: 0.5;
+}
