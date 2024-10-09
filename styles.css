@@ -17,6 +17,7 @@ button {
     padding: 0 1rem;
     margin-right: 1rem;
     border-radius: 10px;
+    width: 100%;
 }
 
 .lists .toggle-input-btn {
@@ -38,5 +39,27 @@ button {
 }
 
 .tasks-list {
+    min-height: 10px;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.dragover {
+    background-color: black;
+}
+
+.tasks-list > div {
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.draggable {
+    cursor: move;
+}
+
+.draggable.dragging {
+    opacity: 0.5;
 }

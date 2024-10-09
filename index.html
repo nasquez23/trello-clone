@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trello Clone</title>
     <link rel="stylesheet" href="./styles.css">
+    <script type="text/javascript" src="./main.js" defer></script>
 </head>
 <body>
     <header class="header">
@@ -19,7 +20,7 @@
                 <!-- To Do Section -->
                 <div id="todo-section">
                     <p>To Do</p>
-                    <ul id="todo-list" class="tasks-list"></ul>
+                    <div id="todo-list" class="tasks-list"></div>
                     <div class="input-section" id="todo-input-section">
                         <input class="card-input" id="todo-input" type="text" placeholder="Enter a title" />
                         <div>
@@ -33,7 +34,7 @@
                 <!-- In Progress Section -->
                 <div id="inprogress-section">
                     <p>In Progress</p>
-                    <ul id="inprogress-list" class="tasks-list"></ul>
+                    <div id="inprogress-list" class="tasks-list"></div>
                     <div class="input-section" id="inprogress-input-section">
                         <input class="card-input" id="inprogress-input" type="text" placeholder="Enter a title" />
                         <div>
@@ -47,7 +48,7 @@
                 <!-- Done Section -->
                 <div id="done-section">
                     <p>Done</p>
-                    <ul id="done-list" class="tasks-list"></ul>
+                    <div id="done-list" class="tasks-list"></div>
                     <div class="input-section" id="done-input-section">
                         <input class="card-input" id="done-input" type="text" placeholder="Enter a title" />
                         <div>
@@ -57,11 +58,9 @@
                     </div>                 
                     <button id="done-add-button" class="toggle-input-btn">+ Add Card</button>
                 </div>
-
+                
             </div>
         </div>
     </main>
-
-    <script type="text/javascript" src="./main.js"></script>
 </body>
 </html>
