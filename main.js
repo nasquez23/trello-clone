@@ -30,14 +30,23 @@ toggleInputButtons.forEach(button => {
     });
 });
 
-const tasksLists = document.querySelectorAll('.tasks-list');
+const tasksLists = document.querySelectorAll('.sections');
 
 tasksLists.forEach(taskList => {
     taskList.addEventListener('dragover', (e) => {
         e.preventDefault();
+        
+        taskList.classList.add("dragover");
+        const draggableTask = document.querySelector('.dragging');
+        taskList.children[1].appendChild(draggableTask);
+    });
+
+    taskList.addEventListener('dragleave', () => {
+        taskList.classList.remove("dragover");
     });
 
     taskList.addEventListener('drop', (e) => {
+        taskList.classList.remove("dragover");
         const draggableTask = document.querySelector('.dragging');
         if (!draggableTask) return;
 
