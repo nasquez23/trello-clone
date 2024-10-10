@@ -176,3 +176,15 @@ button {
 .auth-btn:hover {
   background-color: #0047ab;
 }
+
+.auth-form > p {
+  text-align: center;
+}
+
+.auth-form > p > a {
+  color: #1f51ff;
+}
+
+.auth-form > p > a:hover {
+  color: #0047ab;
+}
