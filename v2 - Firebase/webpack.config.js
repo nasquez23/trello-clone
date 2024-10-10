@@ -28,6 +28,14 @@ module.exports = {
       template: "./src/index.html",
       filename: "index.html",
     }),
+    new HtmlWebpackPlugin({
+      template: "./src/login.html",
+      filename: "login.html"
+    }),
+    new HtmlWebpackPlugin({
+      template: "./src/register.html",
+      filename: "register.html"
+    }),
     new webpack.DefinePlugin({
       "process.env": {
         FIREBASE_API_KEY: JSON.stringify(process.env.FIREBASE_API_KEY),

@@ -130,3 +130,49 @@ button {
 .draggable.dragging {
   opacity: 0.5;
 }
+
+/** login page **/
+
+.auth-header{
+  margin: 2.5rem 0;
+  text-align: center;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.auth-form {
+  padding: 2rem 4rem;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 30%;
+  margin: auto;
+  border-radius: 10px;
+}
+
+.auth-form > label {
+  font-size: 1.2rem;
+}
+
+#email, #password {
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.auth-btn {
+  width: 40%;
+  margin: auto;
+  background-color: #1f51ff;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  padding: 0.7rem;
+  font-weight: bold;
+}
+
+.auth-btn:hover {
+  background-color: #0047ab;
+}
