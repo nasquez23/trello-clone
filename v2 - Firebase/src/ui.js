@@ -1,3 +1,4 @@
+import { loginUser, registerUser } from "./auth";
 import { moveTaskBetweenSections, saveTask } from "./tasks";
 
 const toggleInputButtons = document.querySelectorAll(".toggle-input-btn");
@@ -64,7 +65,10 @@ export const appendTask = (sectionId, task, taskId) => {
   listItem.setAttribute("data-id", taskId);
   listItem.setAttribute("section", sectionId);
   listItem.classList.add("draggable");
-  tasksList.append(listItem);
+
+  if (tasksList) {
+    tasksList.append(listItem);
+  }
 
   listItem.addEventListener("dragstart", () => {
     listItem.classList.add("dragging");
@@ -74,3 +78,34 @@ export const appendTask = (sectionId, task, taskId) => {
     listItem.classList.remove("dragging");
   });
 };
+
+const registerForm = document.getElementById("register-form");
+const loginForm = document.getElementById("login-form");
+
+if (registerForm) {
+  registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    await registerUser(data.email, data.password);
+
+    window.location.href = "index.html";
+    alert("Succesfully registered");
+  });
+}
+
+if (loginForm){
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    await loginUser(data.email, data.password);
+
+    window.location.href = "index.html";
+    alert("Succesfully logged in.");
+  });
+}
