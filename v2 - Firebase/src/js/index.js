@@ -1,5 +1,5 @@
 import { fetchTasks } from "./tasks";
-import "./styles.css";
+import "../styles/styles.css";
 import { auth } from "./firebase";
 
 document.addEventListener("DOMContentLoaded", () => {

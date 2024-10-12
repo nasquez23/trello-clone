@@ -1,5 +1,5 @@
 import { loginUser, registerUser } from "./auth";
-import { moveTaskBetweenSections, saveTask } from "./tasks";
+import { moveTaskBetweenSections, saveTask } from "./tasks.js";
 
 const toggleInputButtons = document.querySelectorAll(".toggle-input-btn");
 

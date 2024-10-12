@@ -6,7 +6,7 @@ dotenv.config();
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
+  entry: "./src/js/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
@@ -25,15 +25,15 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
+      template: "./src/pages/index.html",
       filename: "index.html",
     }),
     new HtmlWebpackPlugin({
-      template: "./src/login.html",
+      template: "./src/pages/login.html",
       filename: "login.html"
     }),
     new HtmlWebpackPlugin({
-      template: "./src/register.html",
+      template: "./src/pages/register.html",
       filename: "register.html"
     }),
     new webpack.DefinePlugin({
