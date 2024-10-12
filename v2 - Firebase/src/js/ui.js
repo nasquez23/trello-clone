@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from "./auth";
+import { loginUser, registerUser, signOutUser } from "./auth";
 import { moveTaskBetweenSections, saveTask } from "./tasks.js";
 
 const toggleInputButtons = document.querySelectorAll(".toggle-input-btn");
@@ -107,5 +107,14 @@ if (loginForm){
 
     window.location.href = "index.html";
     alert("Succesfully logged in.");
+  });
+}
+
+const logoutButton = document.getElementById("logout-btn");
+
+if (logoutButton){
+  logoutButton.addEventListener("click", () => {
+    signOutUser();
+    alert("You have succesfully signed out.");
   });
 }
