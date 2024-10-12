@@ -1,8 +1,11 @@
-import { db } from "./firebase";
+import { auth, db } from "./firebase";
 import { appendTask } from "./ui";
 
 export const fetchTasks = async () => {
-  const tasksSnapshot = await db.collection("tasks").get();
+  const tasksSnapshot = await db
+    .collection("tasks")
+    .where("userId", "==", auth.currentUser.uid)
+    .get();
   tasksSnapshot.forEach((doc) => {
     appendTask(doc.data().status, doc.data().title, doc.id);
   });
@@ -14,6 +17,7 @@ export const saveTask = async (sectionId, task) => {
     await tasksCol.add({
       title: task,
       status: sectionId,
+      userId: auth.currentUser.uid,
     });
     appendTask(sectionId, task);
   }
