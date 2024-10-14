@@ -90,9 +90,6 @@ if (registerForm) {
     const data = Object.fromEntries(formData);
 
     await registerUser(data.email, data.password);
-
-    window.location.href = "index.html";
-    alert("Succesfully registered");
   });
 }
 
@@ -104,9 +101,6 @@ if (loginForm){
     const data = Object.fromEntries(formData);
 
     await loginUser(data.email, data.password);
-
-    window.location.href = "index.html";
-    alert("Succesfully logged in.");
   });
 }
 

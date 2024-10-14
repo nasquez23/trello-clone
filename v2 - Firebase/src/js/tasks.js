@@ -1,11 +1,11 @@
+import { addDoc, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import { appendTask } from "./ui";
 
 export const fetchTasks = async () => {
-  const tasksSnapshot = await db
-    .collection("tasks")
-    .where("userId", "==", auth.currentUser.uid)
-    .get();
+  const tasksQuery = query(collection(db, "tasks"), where("userId", "==", auth.currentUser?.uid));
+  const tasksSnapshot = await getDocs(tasksQuery);
+
   tasksSnapshot.forEach((doc) => {
     appendTask(doc.data().status, doc.data().title, doc.id);
   });
@@ -13,8 +13,8 @@ export const fetchTasks = async () => {
 
 export const saveTask = async (sectionId, task) => {
   if (task.trim()) {
-    const tasksCol = db.collection("tasks");
-    await tasksCol.add({
+    const tasksCol = collection(db, "tasks");
+    await addDoc(tasksCol, {
       title: task,
       status: sectionId,
       userId: auth.currentUser.uid,
@@ -24,8 +24,8 @@ export const saveTask = async (sectionId, task) => {
 };
 
 export const moveTaskBetweenSections = async (taskId, sectionId) => {
-  const taskDocRef = db.collection("tasks").doc(taskId);
-  await taskDocRef.update({
+  const taskDocRef = doc(db, "tasks", taskId);
+  await updateDoc(taskDocRef, {
     status: sectionId,
   });
 };

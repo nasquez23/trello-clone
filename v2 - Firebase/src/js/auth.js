@@ -1,31 +1,38 @@
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "./firebase";
 
 export const registerUser = async (email, password) => {
   try {
-    await auth.createUserWithEmailAndPassword(email, password);
+    await createUserWithEmailAndPassword(auth, email, password);
+
+    alert("Registered succesfully.");
+    window.location.replace("/");
   } catch (error) {
     console.error("Error signing up:", error.message);
-    throw error;
+    alert("Coult not register. Please try again.");
   }
 };
 
 export const loginUser = async (email, password) => {
+  console.log("logged in")
   try {
-    const userCredential = await auth.signInWithEmailAndPassword(
+    await signInWithEmailAndPassword(
+      auth,
       email,
       password
     );
 
-    return userCredential.user;
+    alert("Logged in successfully.");
+    window.location.replace("/");
   } catch (error) {
     console.error("Error signing in:", error.message);
-    throw error;
+    alert("Coult not log you in. Please try again.");
   }
 };
 
 export const signOutUser = async () => {
   try {
-    await auth.signOut();
+    await signOut(auth);
   } catch (error) {
     console.error("Error signing out:", error.message);
     throw error;

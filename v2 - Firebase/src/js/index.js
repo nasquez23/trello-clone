@@ -1,15 +1,34 @@
 import { fetchTasks } from "./tasks";
 import "../styles/styles.css";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 
-document.addEventListener("DOMContentLoaded", () => {
-  auth.onAuthStateChanged((user) => {
-    if (!user) {
-      if (window.location.pathname === "/index.html") {
-        window.location.href = "login.html";
+// document.addEventListener("DOMContentLoaded", () => {
+//   console.log("executed")
+//   onAuthStateChanged(auth, (user) => {
+//     if (!user) {
+//       if (window.location.pathname === "/" || window.location.pathname === "/index.html") {
+//         window.location.replace("login.html");
+//       }
+//     } else {
+//       fetchTasks();
+//     }
+//   });
+// });
+
+if (!window.hasDOMContentLoadedListener) {
+  document.addEventListener("DOMContentLoaded", () => {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        if (window.location.pathname === "/" || window.location.pathname === "/index.html") {
+          window.location.replace("login.html");
+        }
+      } else {
+        fetchTasks();
       }
-    } else {
-      fetchTasks();
-    }
+    });
   });
-});
+  window.hasDOMContentLoadedListener = true;
+}
+
+
