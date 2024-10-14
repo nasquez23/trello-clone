@@ -1,3 +1,4 @@
+import { Task, User } from "./types";
 import { loginUser, registerUser, signOutUser } from "./auth";
 import {
   deleteTask,
@@ -5,12 +6,6 @@ import {
   saveTask,
   updateTaskTitle,
 } from "./tasks";
-
-export interface Task {
-  id: string;
-  title: string;
-  sectionId: string;
-}
 
 const toggleInputButtons = document.querySelectorAll(".toggle-input-btn");
 
@@ -44,8 +39,9 @@ toggleInputButtons.forEach((btn: Element) => {
 
 const tasksLists = document.querySelectorAll(".sections");
 
-tasksLists.forEach((taskList) => {
-  taskList.addEventListener("dragover", (e) => {
+tasksLists.forEach((list) => {
+  const taskList = list as HTMLDivElement;
+  taskList.addEventListener("dragover", (e: DragEvent) => {
     e.preventDefault();
 
     taskList.classList.add("dragover");
@@ -75,14 +71,14 @@ tasksLists.forEach((taskList) => {
 const closeInputSection = (
   button: HTMLButtonElement,
   inputSection: HTMLDivElement
-) => {
+): void => {
   const inputField = inputSection.children[0] as HTMLInputElement;
   inputField.value = "";
   button.style.display = "block";
   inputSection.style.display = "none";
 };
 
-export const appendTask = (task: Task) => {
+export const appendTask = (task: Task): void => {
   const listItem = document.createElement("div");
   const tasksList = document.getElementById(
     `${task.sectionId}-list`
@@ -176,7 +172,7 @@ export const appendTask = (task: Task) => {
   });
 };
 
-export const removeTask = (taskId: string) => {
+export const removeTask = (taskId: string): void => {
   const taskEl = document.querySelector(
     `[data-id=${taskId}]`
   ) as HTMLDivElement;
@@ -189,24 +185,38 @@ const registerForm = document.getElementById(
 const loginForm = document.getElementById("login-form") as HTMLFormElement;
 
 if (registerForm) {
-  registerForm.addEventListener("submit", async (e: Event) => {
+  registerForm.addEventListener("submit", async (e: SubmitEvent) => {
     e.preventDefault();
 
     const formData = new FormData(e.target as HTMLFormElement);
-    const data = Object.fromEntries(formData);
+    const data = Object.fromEntries(formData) as {
+      email: string;
+      password: string;
+    };
+    const newUser: User = {
+      email: data.email,
+      password: data.password,
+    };
 
-    await registerUser(data.email as string, data.password as string);
+    await registerUser(newUser);
   });
 }
 
 if (loginForm) {
-  loginForm.addEventListener("submit", async (e: Event) => {
+  loginForm.addEventListener("submit", async (e: SubmitEvent) => {
     e.preventDefault();
 
     const formData = new FormData(e.target as HTMLFormElement);
-    const data = Object.fromEntries(formData);
+    const data = Object.fromEntries(formData) as {
+      email: string;
+      password: string;
+    };
+    const userData: User = {
+      email: data.email,
+      password: data.password,
+    };
 
-    await loginUser(data.email as string, data.password as string);
+    await loginUser(userData);
   });
 }
 
