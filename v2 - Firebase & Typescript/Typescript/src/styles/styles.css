@@ -32,7 +32,7 @@ body {
   background-color: #1f51ff;
 }
 
-#logout-btn:hover{
+#logout-btn:hover {
   background-color: #0047ab;
 }
 
@@ -140,17 +140,68 @@ button {
 }
 
 .draggable {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border: 0.2px solid black;
   cursor: move;
+}
+
+.update-input {
+  padding: 0.4rem;
+  width: 100%;
 }
 
 .draggable.dragging {
   opacity: 0.5;
 }
 
+.update-btn, .delete-btn {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: none;
+  background-color: inherit;
+  border-radius: 5px;
+}
+
+.update-btn:hover, .delete-btn:hover {
+  background-color: lightgray;
+}
+
+.update-action-btns {
+  margin-top: 5px;
+}
+
+.confirm-update-btn {
+  padding: 0.4rem 0.6rem;
+  border-radius: 5px;
+  border: none;
+  background-color: #1f51ff;
+  color: white;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.confirm-update-btn:hover {
+  background-color: #0047ab;
+}
+
+.cancel-update-btn {
+  border: none;
+  height: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background-color: inherit;
+  font-weight: bold;
+}
+
+.cancel-update-btn:hover {
+  background-color: lightgray;
+}
+
 /** login page **/
 
-.auth-header{
+.auth-header {
   margin: 2.5rem 0;
   text-align: center;
   color: white;
@@ -172,7 +223,8 @@ button {
   font-size: 1.2rem;
 }
 
-#email, #password {
+#email,
+#password {
   padding: 0.7rem;
   margin-bottom: 1rem;
   border-radius: 5px;

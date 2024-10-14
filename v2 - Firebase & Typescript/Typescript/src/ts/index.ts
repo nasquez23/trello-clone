@@ -1,5 +1,6 @@
 import { fetchTasks } from "./tasks";
 import "../styles/styles.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
 
