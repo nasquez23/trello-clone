@@ -6,7 +6,7 @@ dotenv.config();
 
 module.exports = {
   mode: "development",
-  entry: "./src/js/index.js",
+  entry: "./src/ts/index.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
@@ -14,12 +14,22 @@ module.exports = {
   devServer: {
     port: 9000,
     open: true,
-    client: {
-      logging: "log", // This will give you more detailed client-side logs
-    },
+  },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".json"],
   },
   module: {
     rules: [
+      {
+        test: /\.ts$/,
+        use: {
+          loader: "ts-loader",
+          options: {
+            logLevel: "debug",
+          },
+        },
+        exclude: /node_modules/,
+      },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
@@ -34,12 +44,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/pages/login.html",
       filename: "login.html",
-      inject: "body",
     }),
     new HtmlWebpackPlugin({
       template: "./src/pages/register.html",
       filename: "register.html",
-      inject: "body",
     }),
     new webpack.DefinePlugin({
       "process.env": {
