@@ -12,3 +12,7 @@ export interface User {
 export interface TaskListProps {
   title: string;
 }
+
+export interface AddTaskInputProps {
+  hideAddTaskInput: () => void;
+}
