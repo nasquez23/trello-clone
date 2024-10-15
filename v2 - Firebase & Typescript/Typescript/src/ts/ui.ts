@@ -172,13 +172,6 @@ export const appendTask = (task: Task): void => {
   });
 };
 
-export const removeTask = (taskId: string): void => {
-  const taskEl = document.querySelector(
-    `[data-id=${taskId}]`
-  ) as HTMLDivElement;
-  taskEl?.remove();
-};
-
 const registerForm = document.getElementById(
   "register-form"
 ) as HTMLFormElement;
@@ -228,3 +221,8 @@ if (logoutButton) {
     alert("You have succesfully signed out.");
   });
 }
+
+export const clearTasks = (): void => {
+  const allTasks = document.querySelectorAll(".draggable");
+  allTasks.forEach((task) => task.remove());
+};
