@@ -129,7 +129,6 @@ export const appendTask = (task: Task): void => {
 
   confirmUpdateButton.addEventListener("click", () => {
     updateTaskTitle(updateInput.value, task.id);
-    taskTitle.textContent = updateInput.value;
     removeTaskUpdatingContent();
   });
 
