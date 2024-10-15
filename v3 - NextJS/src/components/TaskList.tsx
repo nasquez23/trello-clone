@@ -44,7 +44,7 @@ const TaskList = ({ title }: TaskListProps) => {
         <Button
           sx={{
             marginTop: "0.5rem",
-            width: "50%",
+            width: "70%",
             textAlign: "left",
             color: "black",
             display: "flex",

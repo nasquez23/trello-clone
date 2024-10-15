@@ -8,7 +8,7 @@ const Task = () => {
         padding: "5px",
         borderRadius: "5px",
         border: "1px solid black",
-        fontWeight: "bold"
+        fontWeight: 500
       }}
       component="li"
     >
