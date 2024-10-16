@@ -16,13 +16,14 @@ import { auth, db } from "./firebase";
 import { Task } from "./types";
 import { FirebaseError } from "firebase/app";
 
-export const fetchTasks = async (): Promise<Task[]> => {
-  if (!auth.currentUser) {
-    console.error("User not authenticated.");
-    return [];
-  }
+export const fetchTasks = (): Promise<Task[]> => {
+  return new Promise((resolve, reject) => {
+    if (!auth.currentUser) {
+      console.error("User not authenticated.");
+      reject("User not authenticated.");
+      return;
+    }
 
-  try {
     const tasksQuery = query(
       collection(db, "tasks"),
       where("userId", "==", auth.currentUser?.uid)
@@ -30,32 +31,27 @@ export const fetchTasks = async (): Promise<Task[]> => {
 
     const tasks: Task[] = [];
 
-    await new Promise<void>((resolve, reject) => {
-      onSnapshot(
-        tasksQuery,
-        (tasksSnapshot: QuerySnapshot<DocumentData, DocumentData>) => {
-          tasksSnapshot.forEach((doc) => {
-            const task: Task = {
-              id: doc.id,
-              title: doc.data().title,
-              sectionId: doc.data().status,
-            };
-            tasks.push(task);
-          });
-          resolve();
-        },
-        (error) => {
-          console.error("Error fetching tasks: ", error);
-          reject(error);
-        }
-      );
-    });
+    const unsubscribe = onSnapshot(
+      tasksQuery,
+      (tasksSnapshot: QuerySnapshot<DocumentData, DocumentData>) => {
+        tasksSnapshot.forEach((doc) => {
+          const task: Task = {
+            id: doc.id,
+            title: doc.data().title,
+            sectionId: doc.data().status,
+          };
+          tasks.push(task);
+        });
+        resolve(tasks);
+      },
+      (error) => {
+        console.error("Error fetching tasks: ", error);
+        reject(error);
+      }
+    );
 
-    return tasks;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+    return unsubscribe;
+  });
 };
 
 export const saveTask = async ({
