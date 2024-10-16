@@ -22,3 +22,10 @@ export interface AddTaskInputProps {
   sectionId: string;
   hideAddTaskInput: () => void;
 }
+
+export interface DeleteModalProps {
+  open: boolean;
+  onClose: () => void;
+  handleDeleteTask: () => void;
+  isDeleting: boolean;
+}

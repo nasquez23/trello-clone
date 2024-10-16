@@ -82,28 +82,39 @@ export const saveTask = async ({
   }
 };
 
-export const deleteTask = async (taskId: string): Promise<void> => {
+export const deleteTask = async ({
+  taskId,
+}: {
+  taskId: string;
+}): Promise<void> => {
   try {
     const taskDoc = doc(db, "tasks", taskId);
     await deleteDoc(taskDoc);
-  } catch (error) {
-    console.error(error);
-    alert("Could not delete task. Please try again.");
+  } catch (e) {
+    const error = e as FirebaseError;
+    error.message = "Couldn't delete task. Please try again.";
+
+    throw error;
   }
 };
 
-export const updateTaskTitle = async (
-  taskTitle: string,
-  taskId: string
-): Promise<void> => {
+export const updateTaskTitle = async ({
+  taskTitle,
+  taskId,
+}: {
+  taskTitle: string;
+  taskId: string;
+}): Promise<void> => {
   try {
     const taskDoc = doc(db, "tasks", taskId);
     await updateDoc(taskDoc, {
       title: taskTitle,
     });
-  } catch (error) {
-    console.error(error);
-    alert("Could not update task title. Please try again.");
+  } catch (e) {
+    const error = e as FirebaseError;
+    error.message = "Couldn't update task title. Please try again.";
+
+    throw error;
   }
 };
 
