@@ -19,5 +19,6 @@ export interface TaskProps {
 }
 
 export interface AddTaskInputProps {
+  sectionId: string;
   hideAddTaskInput: () => void;
 }

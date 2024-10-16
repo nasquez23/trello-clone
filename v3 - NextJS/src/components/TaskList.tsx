@@ -9,6 +9,7 @@ import AddTaskInput from "./AddTaskInput";
 
 const TaskList = ({ title, tasks }: TaskListProps) => {
   const [showAddTaskInput, setShowAddTaskInput] = useState<boolean>(false);
+  const sectionId = title.replace(" ", "").toLowerCase();
 
   const hideAddTaskInput = (): void => {
     setShowAddTaskInput(false);
@@ -60,7 +61,7 @@ const TaskList = ({ title, tasks }: TaskListProps) => {
           Add a Card
         </Button>
       ) : (
-        <AddTaskInput hideAddTaskInput={hideAddTaskInput} />
+        <AddTaskInput sectionId={sectionId} hideAddTaskInput={hideAddTaskInput} />
       )}
     </Box>
   );

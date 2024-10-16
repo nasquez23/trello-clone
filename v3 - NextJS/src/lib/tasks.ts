@@ -14,9 +14,9 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import { Task } from "./types";
+import { FirebaseError } from "firebase/app";
 
 export const fetchTasks = async (): Promise<Task[]> => {
-  console.log(auth.currentUser);
   if (!auth.currentUser) {
     console.error("User not authenticated.");
     return [];
@@ -58,7 +58,13 @@ export const fetchTasks = async (): Promise<Task[]> => {
   }
 };
 
-export const saveTask = async (sectionId: string, taskTitle: string) => {
+export const saveTask = async ({
+  sectionId,
+  taskTitle,
+}: {
+  sectionId: string;
+  taskTitle: string;
+}) => {
   try {
     if (taskTitle.trim()) {
       const tasksCol = collection(db, "tasks");
@@ -68,9 +74,11 @@ export const saveTask = async (sectionId: string, taskTitle: string) => {
         userId: auth.currentUser?.uid,
       });
     }
-  } catch (error) {
-    console.error(error);
-    alert("Could not add task. Please try again.");
+  } catch (e) {
+    const error = e as FirebaseError;
+    error.message = "Couldn't save task. Please try again.";
+
+    throw error;
   }
 };
 
