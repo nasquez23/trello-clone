@@ -5,11 +5,12 @@ import { FormEvent } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { saveTask } from "@/lib/tasks";
 import toast from "react-hot-toast";
+import LoadingSpinner from "./LoadingSpinner";
 
 const AddTaskInput = ({ sectionId, hideAddTaskInput }: AddTaskInputProps) => {
   const queryClient = useQueryClient();
-  
-  const { mutate } = useMutation({
+
+  const { mutate, isPending } = useMutation({
     mutationFn: saveTask,
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -50,36 +51,40 @@ const AddTaskInput = ({ sectionId, hideAddTaskInput }: AddTaskInputProps) => {
         }}
         placeholder="Enter a title"
       />
-      <Box sx={{ marginTop: "0.5rem" }}>
-        <Button
-          type="submit"
-          variant="contained"
-          sx={{
-            fontWeight: "bold",
-            backgroundColor: "#1f51ff",
-            "&:hover": {
-              backgroundColor: "#0047ab",
-            },
-          }}
-        >
-          Save Card
-        </Button>
-        <Button
-          type="button"
-          sx={{
-            color: "black",
-            marginLeft: "0.5rem",
-            padding: "0.5rem",
-            minWidth: "auto",
-            "&:hover": {
-              backgroundColor: "lightgray",
-            },
-          }}
-          onClick={hideAddTaskInput}
-        >
-          <Close />
-        </Button>
-      </Box>
+      {isPending ? (
+        <LoadingSpinner />
+      ) : (
+        <Box sx={{ marginTop: "0.5rem" }}>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              fontWeight: "bold",
+              backgroundColor: "#1f51ff",
+              "&:hover": {
+                backgroundColor: "#0047ab",
+              },
+            }}
+          >
+            Save Card
+          </Button>
+          <Button
+            type="button"
+            sx={{
+              color: "black",
+              marginLeft: "0.5rem",
+              padding: "0.5rem",
+              minWidth: "auto",
+              "&:hover": {
+                backgroundColor: "lightgray",
+              },
+            }}
+            onClick={hideAddTaskInput}
+          >
+            <Close />
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 };
