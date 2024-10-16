@@ -16,20 +16,23 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 import LoadingSpinner from "./LoadingSpinner";
+import toast from "react-hot-toast";
 
 const AuthForm = () => {
   const pathname = usePathname();
   const isLoginPage = pathname.includes("login");
   const router = useRouter();
 
-  const { mutate, isPending, isError, error } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: isLoginPage ? loginUser : registerUser,
     onSuccess: () => {
+      toast.success(`Succesfully ${isLoginPage ? "logged in" : "registered"}!`);
       router.push("/");
     },
+    onError: (error) => {
+      toast.error(error?.message as string);
+    },
   });
-
-  console.log(error?.message);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
