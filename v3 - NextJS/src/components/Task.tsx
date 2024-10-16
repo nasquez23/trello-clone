@@ -1,6 +1,7 @@
+import { TaskProps } from "@/lib/types";
 import { Box } from "@mui/material";
 
-const Task = () => {
+const Task = ({ task }: TaskProps) => {
   return (
     <Box
       sx={{
@@ -8,11 +9,11 @@ const Task = () => {
         padding: "5px",
         borderRadius: "5px",
         border: "1px solid black",
-        fontWeight: 500
+        fontWeight: 500,
       }}
       component="li"
     >
-      task 1
+      {task.title}
     </Box>
   );
 };

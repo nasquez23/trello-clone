@@ -11,6 +11,11 @@ export interface User {
 
 export interface TaskListProps {
   title: string;
+  tasks: Task[] | undefined;
+}
+
+export interface TaskProps {
+  task: Task;
 }
 
 export interface AddTaskInputProps {

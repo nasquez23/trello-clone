@@ -15,35 +15,46 @@ import {
 import { auth, db } from "./firebase";
 import { Task } from "./types";
 
-export const fetchTasks = async (): Promise<void> => {
+export const fetchTasks = async (): Promise<Task[]> => {
+  console.log(auth.currentUser);
   if (!auth.currentUser) {
     console.error("User not authenticated.");
-    return;
+    return [];
   }
 
   try {
-    const tasksQuery: Query<DocumentData, DocumentData> = query(
+    const tasksQuery = query(
       collection(db, "tasks"),
       where("userId", "==", auth.currentUser?.uid)
     );
 
-    onSnapshot(
-      tasksQuery,
-      (tasksSnapshot: QuerySnapshot<DocumentData, DocumentData>) => {
-        tasksSnapshot.forEach(
-          (doc: QueryDocumentSnapshot<DocumentData, DocumentData>) => {
+    const tasks: Task[] = [];
+
+    await new Promise<void>((resolve, reject) => {
+      onSnapshot(
+        tasksQuery,
+        (tasksSnapshot: QuerySnapshot<DocumentData, DocumentData>) => {
+          tasksSnapshot.forEach((doc) => {
             const task: Task = {
               id: doc.id,
               title: doc.data().title,
               sectionId: doc.data().status,
             };
-          }
-        );
-      }
-    );
+            tasks.push(task);
+          });
+          resolve();
+        },
+        (error) => {
+          console.error("Error fetching tasks: ", error);
+          reject(error);
+        }
+      );
+    });
+
+    return tasks;
   } catch (error) {
     console.error(error);
-    alert("Could not fetch tasks.");
+    return [];
   }
 };
 

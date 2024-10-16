@@ -7,7 +7,7 @@ import Task from "./Task";
 import { useState } from "react";
 import AddTaskInput from "./AddTaskInput";
 
-const TaskList = ({ title }: TaskListProps) => {
+const TaskList = ({ title, tasks }: TaskListProps) => {
   const [showAddTaskInput, setShowAddTaskInput] = useState<boolean>(false);
 
   const hideAddTaskInput = (): void => {
@@ -37,8 +37,9 @@ const TaskList = ({ title }: TaskListProps) => {
         }}
         component="ul"
       >
-        <Task />
-        <Task />
+        {tasks?.map((task) => (
+          <Task key={task.id} task={task} />
+        ))}
       </Box>
       {!showAddTaskInput ? (
         <Button

@@ -1,7 +1,22 @@
+"use client";
+
 import { Box } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import TaskList from "./TaskList";
+import { fetchTasks } from "@/lib/tasks";
+import { Task } from "@/lib/types";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Board = () => {
+  const { data: tasks, isLoading } = useQuery<Task[], Error>({
+    queryKey: ["tasks"],
+    queryFn: fetchTasks,
+  });
+
+  if (isLoading) {
+    return <LoadingSpinner />
+  }
+
   return (
     <Box
       sx={{
@@ -13,9 +28,18 @@ const Board = () => {
         marginTop: "1rem",
       }}
     >
-      <TaskList title="To Do" />
-      <TaskList title="In Progress" />
-      <TaskList title="Done" />
+      <TaskList
+        title="To Do"
+        tasks={tasks?.filter((task) => task.sectionId === "todo")}
+      />
+      <TaskList
+        title="In Progress"
+        tasks={tasks?.filter((task) => task.sectionId === "inprogress")}
+      />
+      <TaskList
+        title="Done"
+        tasks={tasks?.filter((task) => task.sectionId === "done")}
+      />
     </Box>
   );
 };
