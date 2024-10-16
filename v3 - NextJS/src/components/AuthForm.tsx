@@ -1,5 +1,7 @@
 "use client";
 
+import { loginUser, registerUser } from "@/lib/auth";
+import { User } from "@/lib/types";
 import {
   Box,
   Button,
@@ -8,12 +10,42 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { FormEvent } from "react";
+import LoadingSpinner from "./LoadingSpinner";
 
 const AuthForm = () => {
   const pathname = usePathname();
   const isLoginPage = pathname.includes("login");
+  const router = useRouter();
+
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: isLoginPage ? loginUser : registerUser,
+    onSuccess: () => {
+      router.push("/");
+    },
+  });
+
+  console.log(error?.message);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target as HTMLFormElement);
+    const data = Object.fromEntries(formData) as {
+      email: string;
+      password: string;
+    };
+
+    const userData: User = {
+      email: data.email,
+      password: data.password,
+    };
+    mutate(userData);
+  };
 
   return (
     <>
@@ -40,6 +72,7 @@ const AuthForm = () => {
         }}
       >
         <form
+          onSubmit={handleSubmit}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -56,20 +89,24 @@ const AuthForm = () => {
             Password
           </InputLabel>
           <Input id="password" type="password" name="password" />
-          <Button
-            sx={{
-              marginTop: "1.5rem",
-              fontWeight: 600,
-              backgroundColor: "#1f51ff",
-              "&:hover": {
-                backgroundColor: "#0047ab",
-              },
-            }}
-            type="submit"
-            variant="contained"
-          >
-            {isLoginPage ? "Login" : "Register"}
-          </Button>
+          {isPending ? (
+            <LoadingSpinner />
+          ) : (
+            <Button
+              sx={{
+                marginTop: "1.5rem",
+                fontWeight: 600,
+                backgroundColor: "#1f51ff",
+                "&:hover": {
+                  backgroundColor: "#0047ab",
+                },
+              }}
+              type="submit"
+              variant="contained"
+            >
+              {isLoginPage ? "Login" : "Register"}
+            </Button>
+          )}
           <Typography sx={{ textAlign: "center", marginTop: "1rem" }}>
             {isLoginPage ? "New to the site? " : "Already have an account? "}
             <Typography

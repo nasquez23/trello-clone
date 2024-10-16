@@ -1,41 +1,37 @@
 import {
   createUserWithEmailAndPassword,
+  getAuth,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth } from "./firebase";
 import { User } from "./types";
 import { FirebaseError } from "firebase/app";
+import { auth } from "./firebase";
 
 export const registerUser = async (newUser: User): Promise<void> => {
   try {
     await createUserWithEmailAndPassword(auth, newUser.email, newUser.password);
-
-    alert("Registered succesfully.");
-    window.location.replace("/");
   } catch (e) {
     const error = e as FirebaseError;
     if (error.code === "auth/email-already-in-use") {
-      alert("This email is already in use. Please try another one.");
+      error.message = "Email already in use.";
     } else if (error.code === "auth/weak-password") {
-      alert("The password is too weak. Please choose a stronger password.");
+      error.message = "Password should be at least 6 characters.";
     } else {
-      console.error("Error signing up:", error.message);
-      alert("Could not register. Please try again.");
+      error.message = "Error while registering. Please try again.";
     }
+    throw error;
   }
 };
 
 export const loginUser = async (userData: User): Promise<void> => {
   try {
     await signInWithEmailAndPassword(auth, userData.email, userData.password);
-
-    alert("Logged in successfully.");
-    window.location.replace("/");
   } catch (e) {
     const error = e as FirebaseError;
-    console.error("Error signing in:", error.message);
-    alert("Coult not log you in. Please try again.");
+    error.message = "Invalid credentials. Please try again.";
+
+    throw error;
   }
 };
 
@@ -44,7 +40,8 @@ export const signOutUser = async (): Promise<void> => {
     await signOut(auth);
   } catch (e) {
     const error = e as FirebaseError;
-    console.error("Error signing out:", error.message);
-    alert("Could not log you out. Please try again.");
+    error.message = "Error signing out. Please try again.";
+
+    throw error;
   }
 };
