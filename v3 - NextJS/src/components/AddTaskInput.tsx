@@ -13,6 +13,7 @@ const AddTaskInput = ({ sectionId, hideAddTaskInput }: AddTaskInputProps) => {
   const { mutate, isPending } = useMutation({
     mutationFn: saveTask,
     onSuccess: () => {
+      toast.success("Task added.");
       queryClient.invalidateQueries({
         queryKey: ["tasks"],
       });

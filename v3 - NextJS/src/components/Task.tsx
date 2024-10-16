@@ -19,6 +19,7 @@ const Task = ({ task }: TaskProps) => {
   const { mutate: updateTaskMutation, isPending: isUpdating } = useMutation({
     mutationFn: updateTaskTitle,
     onSuccess: () => {
+      toast.success("Task title updated.");
       queryClient.invalidateQueries({
         queryKey: ["tasks"],
       });
@@ -32,6 +33,7 @@ const Task = ({ task }: TaskProps) => {
   const { mutate: deleteTaskMutation, isPending: isDeleting } = useMutation({
     mutationFn: deleteTask,
     onSuccess: () => {
+      toast.success("Task deleted.");
       queryClient.invalidateQueries({
         queryKey: ["tasks"],
       });
