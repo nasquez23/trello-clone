@@ -8,8 +8,11 @@ import LoadingSpinner from "./LoadingSpinner";
 import { useMutation } from "@tanstack/react-query";
 import { signOutUser } from "@/lib/auth";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Header = () => {
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -17,6 +20,7 @@ const Header = () => {
     mutationFn: signOutUser,
     onSuccess: () => {
       toast.success("You have succesfully logged out.");
+      router.push("/login");
     },
   });
 
@@ -34,6 +38,7 @@ const Header = () => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) router.push("/login");
       setUser(user);
     });
 
@@ -57,6 +62,7 @@ const Header = () => {
         <Typography
           variant="h4"
           sx={{
+            marginLeft: "2rem",
             flexGrow: 1,
             textAlign: "center",
           }}
@@ -85,12 +91,14 @@ const Header = () => {
               open={Boolean(anchorEl)}
               onClose={handleMenuClose}
             >
-              <MenuItem
-                sx={{ padding: "0.7rem 1.2rem" }}
-                onClick={handleMenuClose}
-              >
-                Profile
-              </MenuItem>
+              <Link href="/profile">
+                <MenuItem
+                  sx={{ padding: "0.7rem 1.2rem" }}
+                  onClick={handleMenuClose}
+                >
+                  Profile
+                </MenuItem>
+              </Link>
               <MenuItem
                 sx={{ padding: "0.7rem 1.2rem" }}
                 onClick={handleLogout}
