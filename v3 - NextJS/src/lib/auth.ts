@@ -2,6 +2,7 @@ import {
   createUserWithEmailAndPassword,
   GithubAuthProvider,
   GoogleAuthProvider,
+  sendEmailVerification,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -77,6 +78,21 @@ export const signOutUser = async (): Promise<void> => {
   } catch (e) {
     const error = e as FirebaseError;
     error.message = "Error signing out. Please try again.";
+
+    throw error;
+  }
+};
+
+export const verifyUserEmail = async (): Promise<void> => {
+  const user = auth.currentUser;
+
+  if (!user) throw new Error("User is not logged in.");
+
+  try {
+    await sendEmailVerification(user);
+  } catch (e) {
+    const error = e as FirebaseError;
+    error.message = "Error sending verification email. Please try again.";
 
     throw error;
   }

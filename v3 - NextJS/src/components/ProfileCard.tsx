@@ -1,6 +1,6 @@
 "use client";
 
-import { updateUserProfile } from "@/lib/auth";
+import { updateUserProfile, verifyUserEmail } from "@/lib/auth";
 import { auth } from "@/lib/firebase";
 import {
   Box,
@@ -14,16 +14,27 @@ import { useMutation } from "@tanstack/react-query";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import LoadingSpinner from "./LoadingSpinner";
+import { CancelRounded, CheckCircle } from "@mui/icons-material";
 
 const ProfileCard = () => {
   const user = auth.currentUser;
   const [editing, setEditing] = useState(false);
 
-  const { mutate, isPending: isUpdating } = useMutation({
+  const { mutate: updateProfile, isPending: isUpdating } = useMutation({
     mutationFn: updateUserProfile,
     onSuccess: () => {
       toast.success("Profile updated succesfully!");
       setEditing(false);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const { mutate: verifyEmail, isPending: isSendingEmail } = useMutation({
+    mutationFn: verifyUserEmail,
+    onSuccess: () => {
+      toast.success("Verification email sent. Please check your inbox.");
     },
     onError: (error) => {
       toast.error(error.message);
@@ -37,7 +48,7 @@ const ProfileCard = () => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData) as { name: string };
 
-    mutate(data.name);
+    updateProfile(data.name);
   };
 
   return (
@@ -63,10 +74,9 @@ const ProfileCard = () => {
             "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
           }
           sx={{
-            width: 100,
-            height: 100,
+            width: 150,
+            height: 150,
             margin: "0 auto",
-            marginBottom: "1rem",
           }}
         />
 
@@ -79,6 +89,49 @@ const ProfileCard = () => {
         >
           {user?.email}
         </Typography>
+        <Typography
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "1.2rem",
+          }}
+        >
+          {user?.emailVerified ? (
+            <CheckCircle
+              sx={{ marginRight: "0.4rem", color: "green", fontSize: "1.5rem" }}
+            />
+          ) : (
+            <CancelRounded
+              sx={{ marginRight: "0.4rem", color: "red", fontSize: "1.5rem" }}
+            />
+          )}
+          Your email is{!user?.emailVerified && "n't"} verified.
+        </Typography>
+        {!user?.emailVerified && (
+          <Box sx={{ marginTop: "1rem" }}>
+            {isSendingEmail ? (
+              <LoadingSpinner />
+            ) : (
+              <Button
+                onClick={() => verifyEmail()}
+                disabled={isSendingEmail}
+                variant="contained"
+                color="primary"
+                sx={{
+                  fontWeight: "bold",
+                  padding: "0.7rem 1.2rem",
+                  backgroundColor: "#1f51ff",
+                  "&:hover": {
+                    backgroundColor: "#0047ab",
+                  },
+                }}
+              >
+                Verify Email
+              </Button>
+            )}
+          </Box>
+        )}
 
         {editing && (
           <>
