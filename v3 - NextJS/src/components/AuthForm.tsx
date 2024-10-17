@@ -5,6 +5,7 @@ import { User } from "@/lib/types";
 import {
   Box,
   Button,
+  Divider,
   Input,
   InputLabel,
   Paper,
@@ -17,6 +18,8 @@ import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 import LoadingSpinner from "./LoadingSpinner";
 import toast from "react-hot-toast";
+import GoogleSignInButton from "./GoogleSignInButton";
+import GithubSignInButton from "./GithubSignInButton";
 
 const AuthForm = () => {
   const pathname = usePathname();
@@ -110,6 +113,9 @@ const AuthForm = () => {
               {isLoginPage ? "Login" : "Register"}
             </Button>
           )}
+          <Divider sx={{ margin: "2rem 0 1rem 0" }}>or</Divider>
+          <GoogleSignInButton />
+          <GithubSignInButton />
           <Typography sx={{ textAlign: "center", marginTop: "1rem" }}>
             {isLoginPage ? "New to the site? " : "Already have an account? "}
             <Typography

@@ -1,6 +1,9 @@
 import {
   createUserWithEmailAndPassword,
+  GithubAuthProvider,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 import { User } from "./types";
@@ -31,6 +34,22 @@ export const loginUser = async (userData: User): Promise<void> => {
     error.message = "Invalid credentials. Please try again.";
 
     throw error;
+  }
+};
+
+export const signInWithGoogle = async (): Promise<void> => {
+  try {
+    await signInWithPopup(auth, new GoogleAuthProvider());
+  } catch (error) {
+    throw new Error("Google Sign In failed. Please try again.");
+  }
+};
+
+export const signInWithGithub = async (): Promise<void> => {
+  try {
+    await signInWithPopup(auth, new GithubAuthProvider());
+  } catch (error) {
+    throw new Error("Github Sign In failed. Please try again.");
   }
 };
 
