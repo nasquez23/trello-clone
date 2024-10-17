@@ -16,6 +16,7 @@ export interface TaskListProps {
 
 export interface TaskProps {
   task: Task;
+  index: number;
 }
 
 export interface AddTaskInputProps {

@@ -1,18 +1,21 @@
 "use client";
 
 import { Box } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import TaskList from "./TaskList";
-import { fetchTasks } from "@/lib/tasks";
+import { fetchTasks, moveTaskBetweenSections } from "@/lib/tasks";
 import { Task } from "@/lib/types";
 import LoadingSpinner from "./LoadingSpinner";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
+import toast from "react-hot-toast";
 
 const Board = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { data: tasks, isLoading } = useQuery<Task[], Error>({
     queryKey: ["tasks"],
     queryFn: fetchTasks,
@@ -32,30 +35,45 @@ const Board = () => {
     return <LoadingSpinner />;
   }
 
+  const onDragEnd = (result: any) => {
+    const { destination, draggableId, source } = result;
+    const sectionId = destination.droppableId.replace(" ", "").toLowerCase();
+
+    if (!destination || destination.droppableId === source.droppableId) return;
+
+    moveTaskBetweenSections(draggableId, sectionId);
+    toast.success(`Task moved to ${destination.droppableId} section`);
+    queryClient.invalidateQueries({
+      queryKey: ["tasks"],
+    });
+  };
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        width: "100%",
-        gap: "1rem",
-        paddingX: "1rem",
-        marginTop: "1rem",
-      }}
-    >
-      <TaskList
-        title="To Do"
-        tasks={tasks?.filter((task) => task.sectionId === "todo")}
-      />
-      <TaskList
-        title="In Progress"
-        tasks={tasks?.filter((task) => task.sectionId === "inprogress")}
-      />
-      <TaskList
-        title="Done"
-        tasks={tasks?.filter((task) => task.sectionId === "done")}
-      />
-    </Box>
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          width: "100%",
+          gap: "1rem",
+          paddingX: "1rem",
+          marginTop: "1rem",
+        }}
+      >
+        <TaskList
+          title="To Do"
+          tasks={tasks?.filter((task) => task.sectionId === "todo")}
+        />
+        <TaskList
+          title="In Progress"
+          tasks={tasks?.filter((task) => task.sectionId === "inprogress")}
+        />
+        <TaskList
+          title="Done"
+          tasks={tasks?.filter((task) => task.sectionId === "done")}
+        />
+      </Box>
+    </DragDropContext>
   );
 };
 

@@ -1,11 +1,10 @@
-"use client";
-
 import { TaskListProps } from "@/lib/types";
 import { Box, Button, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import Task from "./Task";
 import { useState } from "react";
 import AddTaskInput from "./AddTaskInput";
+import { Droppable } from "react-beautiful-dnd";
 
 const TaskList = ({ title, tasks }: TaskListProps) => {
   const [showAddTaskInput, setShowAddTaskInput] = useState<boolean>(false);
@@ -16,54 +15,72 @@ const TaskList = ({ title, tasks }: TaskListProps) => {
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100%",
-        backgroundColor: "whitesmoke",
-        borderRadius: "10px",
-        padding: "1rem",
-      }}
-    >
-      <Typography sx={{ fontWeight: "bold", fontFamily: "Montserrat" }}>
-        {title}
-      </Typography>
-      <Box
-        sx={{
-          margin: "1rem 0 0.5rem 0",
-          listStyle: "none",
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.5rem",
-        }}
-        component="ul"
-      >
-        {tasks?.map((task) => (
-          <Task key={task.id} task={task} />
-        ))}
-      </Box>
-      {!showAddTaskInput ? (
-        <Button
+    <Droppable droppableId={title} direction="vertical">
+      {(provided) => (
+        <Box
+          ref={provided.innerRef}
+          {...provided.droppableProps}
           sx={{
-            marginTop: "0.5rem",
-            width: "70%",
-            textAlign: "left",
-            color: "black",
+            width: "100%",
+            height: "100%",
+            backgroundColor: "whitesmoke",
+            borderRadius: "10px",
+            padding: "1rem",
             display: "flex",
-            justifyContent: "start",
-            fontWeight: "bold",
-            textTransform: "none",
-            "&:hover": { backgroundColor: "lightgray" },
+            flexDirection: "column",
+            gap: "1rem",
+            position: "relative",
+            paddingBottom: "4rem",
           }}
-          onClick={() => setShowAddTaskInput(true)}
         >
-          <Add />
-          Add a Card
-        </Button>
-      ) : (
-        <AddTaskInput sectionId={sectionId} hideAddTaskInput={hideAddTaskInput} />
+          <Typography sx={{ fontWeight: "bold", fontFamily: "Montserrat" }}>
+            {title}
+          </Typography>
+
+          <Box
+            sx={{
+              listStyle: "none",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.5rem",
+              flexGrow: 1,
+            }}
+            component="ul"
+          >
+            {tasks?.map((task, index) => (
+              <Task key={task.id} task={task} index={index} />
+            ))}
+          </Box>
+
+          <Box sx={{ position: "absolute", bottom: "1rem", width: "100%" }}>
+            {!showAddTaskInput ? (
+              <Button
+                sx={{
+                  width: "70%",
+                  textAlign: "left",
+                  color: "black",
+                  display: "flex",
+                  justifyContent: "start",
+                  fontWeight: "bold",
+                  textTransform: "none",
+                  "&:hover": { backgroundColor: "lightgray" },
+                }}
+                onClick={() => setShowAddTaskInput(true)}
+              >
+                <Add />
+                Add a Card
+              </Button>
+            ) : (
+              <AddTaskInput
+                sectionId={sectionId}
+                hideAddTaskInput={hideAddTaskInput}
+              />
+            )}
+          </Box>
+          {provided.placeholder}
+        </Box>
       )}
-    </Box>
+    </Droppable>
   );
 };
 

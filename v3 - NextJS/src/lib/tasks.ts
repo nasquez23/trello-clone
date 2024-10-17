@@ -13,6 +13,7 @@ import {
 import { auth, db } from "./firebase";
 import { Task } from "./types";
 import { FirebaseError } from "firebase/app";
+import toast from "react-hot-toast";
 
 export const fetchTasks = (): Promise<Task[]> => {
   return new Promise((resolve, reject) => {
@@ -121,8 +122,10 @@ export const moveTaskBetweenSections = async (
     await updateDoc(taskDoc, {
       status: sectionId,
     });
-  } catch (error) {
-    console.error(error);
-    alert("Error while moving task.");
+  } catch (e) {
+    const error = e as FirebaseError;
+    error.message = "Failed to move task. Please try again.";
+
+    toast.error(error.message);
   }
 };
