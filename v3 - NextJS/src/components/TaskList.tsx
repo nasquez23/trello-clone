@@ -30,7 +30,7 @@ const TaskList = ({ title, tasks }: TaskListProps) => {
             flexDirection: "column",
             gap: "1rem",
             position: "relative",
-            paddingBottom: "4rem",
+            paddingBottom: showAddTaskInput ? "8rem" : "4rem",
           }}
         >
           <Typography sx={{ fontWeight: "bold", fontFamily: "Montserrat" }}>
@@ -52,8 +52,8 @@ const TaskList = ({ title, tasks }: TaskListProps) => {
             ))}
           </Box>
 
-          <Box sx={{ position: "absolute", bottom: "1rem", width: "100%" }}>
-            {!showAddTaskInput ? (
+          {!showAddTaskInput ? (
+            <Box sx={{ position: "absolute", bottom: "1rem", width: "100%" }}>
               <Button
                 sx={{
                   width: "70%",
@@ -70,13 +70,15 @@ const TaskList = ({ title, tasks }: TaskListProps) => {
                 <Add />
                 Add a Card
               </Button>
-            ) : (
+            </Box>
+          ) : (
+            <Box sx={{ position: "absolute", bottom: "1rem", width: "93%" }}>
               <AddTaskInput
                 sectionId={sectionId}
                 hideAddTaskInput={hideAddTaskInput}
               />
-            )}
-          </Box>
+            </Box>
+          )}
           {provided.placeholder}
         </Box>
       )}
