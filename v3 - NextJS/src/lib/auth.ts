@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { User } from "./types";
 import { FirebaseError } from "firebase/app";
@@ -50,6 +51,23 @@ export const signInWithGithub = async (): Promise<void> => {
     await signInWithPopup(auth, new GithubAuthProvider());
   } catch (error) {
     throw new Error("Github Sign In failed. Please try again.");
+  }
+};
+
+export const updateUserProfile = async (name: string) => {
+  const user = auth.currentUser;
+
+  if (!user) throw new Error("User is not logged in.");
+
+  try {
+    await updateProfile(user, {
+      displayName: name,
+    });
+  } catch (e) {
+    const error = e as FirebaseError;
+    error.message = "Couldn't update your profile. Please try again.";
+
+    throw error;
   }
 };
 
