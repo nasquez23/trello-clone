@@ -1,6 +1,6 @@
 "use client";
 
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import TaskList from "./TaskList";
 import { fetchTasks, moveTaskBetweenSections } from "@/lib/tasks";
@@ -50,6 +50,21 @@ const Board = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      <Box
+        sx={{
+          marginTop: "1rem",
+          width: "100%",
+          color: "white",
+          padding: "1rem",
+          backgroundColor: "#5a6bdf",
+        }}
+      >
+        <Typography sx={{ fontSize: "1.5rem", fontWeight: "bold" }}>{`${
+          auth.currentUser?.displayName
+            ? `${auth.currentUser.displayName}'s Board `
+            : "Project Board"
+        }`}</Typography>
+      </Box>
       <Box
         sx={{
           display: "flex",
