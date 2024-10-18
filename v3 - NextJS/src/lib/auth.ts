@@ -11,7 +11,7 @@ import {
 import { User } from "./types";
 import { FirebaseError } from "firebase/app";
 import { auth } from "./firebase";
-import { uploadFileToStorage } from "./storage";
+import { deleteOldProfilePicture, uploadFileToStorage } from "./storage";
 
 export const registerUser = async (newUser: User): Promise<void> => {
   try {
@@ -105,6 +105,11 @@ export const changeProfilePicture = async (file: File): Promise<void> => {
   if (!user) throw new Error("User is not logged in.");
 
   try {
+    const oldPhotoURL = user.photoURL;
+    if (oldPhotoURL) {
+      await deleteOldProfilePicture(oldPhotoURL);
+    }
+    
     const photoURL = await uploadFileToStorage(file);
 
     await updateProfile(user, {

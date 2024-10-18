@@ -1,5 +1,11 @@
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import { auth, storage } from "./firebase";
+import { FirebaseError } from "firebase/app";
 
 export const uploadFileToStorage = async (file: File): Promise<string> => {
   const storageRef = ref(
@@ -10,20 +16,31 @@ export const uploadFileToStorage = async (file: File): Promise<string> => {
   const uploadTask = uploadBytesResumable(storageRef, file);
 
   return new Promise((resolve, reject) => {
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Upload is ${progress}% done`);
+    uploadTask.then(
+      async () => {
+        try {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          resolve(downloadURL);
+        } catch (error) {
+          reject(error);
+        }
       },
       (error) => {
         console.error("Upload failed:", error);
         reject(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then(resolve).catch(reject);
       }
     );
   });
+};
+
+export const deleteOldProfilePicture = async (oldPhotoURL: string) => {
+  try {
+    const oldPhotoRef = ref(storage, oldPhotoURL);
+    await deleteObject(oldPhotoRef);
+  } catch (e) {
+    const error = e as FirebaseError;
+    error.message = "Couldn't delete old profile picture. Please try again.";
+
+    throw error;
+  }
 };
