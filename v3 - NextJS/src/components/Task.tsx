@@ -74,7 +74,7 @@ const Task = ({ task, index }: TaskProps) => {
             onMouseEnter={() => setShowActionBtns(true)}
             onMouseLeave={() => setShowActionBtns(false)}
             sx={{
-              height: "auto",
+              height: "100%",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -150,7 +150,18 @@ const Task = ({ task, index }: TaskProps) => {
               </Box>
             ) : (
               <>
-                <Typography component="span" sx={{ fontWeight: 500 }}>
+                <Typography
+                  noWrap={false}
+                  component="span"
+                  sx={{
+                    overflowWrap: "break-word",
+                    textWrap: "wrap",
+                    display: "block",
+                    fontWeight: 500,
+                    width: "70%",
+                    whiteSpace: "normal",
+                  }}
+                >
                   {task.title}
                 </Typography>
                 {showActionBtns && (

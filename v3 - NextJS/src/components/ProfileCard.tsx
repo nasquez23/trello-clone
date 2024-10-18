@@ -121,7 +121,7 @@ const ProfileCard = () => {
             <Box
               component="form"
               onSubmit={handleSaveChanges}
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", marginTop: "1rem" }}
             >
               <TextField
                 required

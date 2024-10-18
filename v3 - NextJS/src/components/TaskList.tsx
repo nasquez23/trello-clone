@@ -22,6 +22,7 @@ const TaskList = ({ title, tasks }: TaskListProps) => {
           {...provided.droppableProps}
           sx={{
             width: "100%",
+            maxWidth: "460px",
             height: "100%",
             backgroundColor: "whitesmoke",
             borderRadius: "10px",
