@@ -11,6 +11,7 @@ import {
 import { User } from "./types";
 import { FirebaseError } from "firebase/app";
 import { auth } from "./firebase";
+import { uploadFileToStorage } from "./storage";
 
 export const registerUser = async (newUser: User): Promise<void> => {
   try {
@@ -93,6 +94,25 @@ export const verifyUserEmail = async (): Promise<void> => {
   } catch (e) {
     const error = e as FirebaseError;
     error.message = "Error sending verification email. Please try again.";
+
+    throw error;
+  }
+};
+
+export const changeProfilePicture = async (file: File): Promise<void> => {
+  const user = auth.currentUser;
+
+  if (!user) throw new Error("User is not logged in.");
+
+  try {
+    const photoURL = await uploadFileToStorage(file);
+
+    await updateProfile(user, {
+      photoURL,
+    });
+  } catch (e) {
+    const error = e as FirebaseError;
+    error.message = "Couldn't update your profile picture. Please try again.";
 
     throw error;
   }

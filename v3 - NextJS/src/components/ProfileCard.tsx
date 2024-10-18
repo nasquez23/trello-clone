@@ -2,23 +2,17 @@
 
 import { updateUserProfile, verifyUserEmail } from "@/lib/auth";
 import { auth } from "@/lib/firebase";
-import {
-  Box,
-  Typography,
-  Paper,
-  Avatar,
-  TextField,
-  Button,
-} from "@mui/material";
+import { Box, Typography, Paper, TextField, Button } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import LoadingSpinner from "./LoadingSpinner";
 import { CancelRounded, CheckCircle } from "@mui/icons-material";
+import ProfileAvatar from "./ProfileAvatar";
 
 const ProfileCard = () => {
   const user = auth.currentUser;
-  const [editing, setEditing] = useState(false);
+  const [editing, setEditing] = useState<boolean>(false);
 
   const { mutate: updateProfile, isPending: isUpdating } = useMutation({
     mutationFn: updateUserProfile,
@@ -68,18 +62,7 @@ const ProfileCard = () => {
       <Paper
         sx={{ padding: "2rem", textAlign: "center", width: "50%", mx: "auto" }}
       >
-        <Avatar
-          src={
-            user?.photoURL ||
-            "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="
-          }
-          sx={{
-            width: 150,
-            height: 150,
-            margin: "0 auto",
-          }}
-        />
-
+        <ProfileAvatar />
         <Typography variant="h6">
           {user?.displayName || "Anonymous User"}
         </Typography>
