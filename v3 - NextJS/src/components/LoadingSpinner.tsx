@@ -1,8 +1,8 @@
 import { Box, CircularProgress } from "@mui/material";
 
-const LoadingSpinner = () => {
+const LoadingSpinner = ({ marginY }: { marginY: string }) => {
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", my: "5%" }}>
+    <Box sx={{ display: "flex", justifyContent: "center", my: marginY }}>
       <CircularProgress />
     </Box>
   );

@@ -96,7 +96,7 @@ const AuthForm = () => {
           </InputLabel>
           <Input id="password" type="password" name="password" />
           {isPending ? (
-            <LoadingSpinner />
+            <LoadingSpinner marginY="1rem" />
           ) : (
             <Button
               sx={{

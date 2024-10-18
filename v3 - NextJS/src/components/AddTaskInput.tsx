@@ -53,7 +53,7 @@ const AddTaskInput = ({ sectionId, hideAddTaskInput }: AddTaskInputProps) => {
         placeholder="Enter a title"
       />
       {isPending ? (
-        <LoadingSpinner />
+        <LoadingSpinner marginY="0" />
       ) : (
         <Box sx={{ marginTop: "0.5rem" }}>
           <Button

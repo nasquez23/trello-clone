@@ -104,12 +104,12 @@ const Header = () => {
                 onClick={handleLogout}
                 disabled={isPending}
               >
-                {isPending ? <LoadingSpinner /> : "Logout"}
+                {isPending ? <LoadingSpinner marginY="0" /> : "Logout"}
               </MenuItem>
             </Menu>
           </>
         ) : (
-          <LoadingSpinner />
+          <LoadingSpinner marginY="0.5rem" />
         )}
       </Box>
     </header>

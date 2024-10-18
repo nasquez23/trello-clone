@@ -110,7 +110,7 @@ const Task = ({ task, index }: TaskProps) => {
                   placeholder="Enter a title"
                 />
                 {isUpdating ? (
-                  <LoadingSpinner />
+                  <LoadingSpinner marginY="0.5rem" />
                 ) : (
                   <Box sx={{ marginTop: "0.5rem" }}>
                     <Button

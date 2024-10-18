@@ -34,10 +34,10 @@ const DeleteModal = ({
       <DialogContent sx={{ marginTop: "1.5rem", fontSize: "1.2rem" }}>
         Are you sure you want to delete this task?
       </DialogContent>
-      <DialogActions sx={{ padding: "1rem" }}>
-        {isDeleting ? (
-          <LoadingSpinner />
-        ) : (
+      {isDeleting ? (
+        <LoadingSpinner marginY="2rem" />
+      ) : (
+        <DialogActions sx={{ padding: "1rem" }}>
           <Box>
             <Button
               sx={{
@@ -66,8 +66,8 @@ const DeleteModal = ({
               Delete
             </Button>
           </Box>
-        )}
-      </DialogActions>
+        </DialogActions>
+      )}
     </Dialog>
   );
 };

@@ -127,7 +127,7 @@ const ProfileAvatar = () => {
           </Button>
         </Box>
       ) : isUploading ? (
-        <LoadingSpinner />
+        <LoadingSpinner marginY="1rem" />
       ) : null}
     </>
   );

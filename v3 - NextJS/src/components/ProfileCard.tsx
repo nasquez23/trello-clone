@@ -94,7 +94,7 @@ const ProfileCard = () => {
         {!user?.emailVerified && (
           <Box sx={{ marginTop: "1rem" }}>
             {isSendingEmail ? (
-              <LoadingSpinner />
+              <LoadingSpinner marginY="1rem" />
             ) : (
               <Button
                 onClick={() => verifyEmail()}
@@ -132,7 +132,7 @@ const ProfileCard = () => {
                 sx={{ marginBottom: "1rem" }}
               />
               {isUpdating ? (
-                <LoadingSpinner />
+                <LoadingSpinner marginY="1rem" />
               ) : (
                 <Box
                   sx={{

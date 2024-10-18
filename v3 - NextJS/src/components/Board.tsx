@@ -32,7 +32,7 @@ const Board = () => {
   }, [router]);
 
   if (isLoading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner marginY="10%" />;
   }
 
   const onDragEnd = (result: any) => {
