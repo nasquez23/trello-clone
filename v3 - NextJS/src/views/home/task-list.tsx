@@ -1,12 +1,17 @@
-import { TaskListProps } from "@/lib/types";
 import { Box, Button, Typography } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import Task from "./Task";
+import Task from "./task";
 import { useState } from "react";
-import AddTaskInput from "./AddTaskInput";
+import AddTaskInput from "./add-task-input";
 import { Droppable } from "react-beautiful-dnd";
+import { Task as TaskType } from "@/types/task";
 
-const TaskList = ({ title, tasks }: TaskListProps) => {
+interface Props {
+  title: string;
+  tasks: TaskType[] | undefined;
+}
+
+const TaskList = ({ title, tasks }: Props) => {
   const [showAddTaskInput, setShowAddTaskInput] = useState<boolean>(false);
   const sectionId = title.replace(" ", "").toLowerCase();
 

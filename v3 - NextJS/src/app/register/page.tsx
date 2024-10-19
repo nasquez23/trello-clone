@@ -1,11 +1,7 @@
-import AuthForm from "@/components/AuthForm";
+import { RegisterView } from "@/views/auth";
 
 const RegisterPage = () => {
-  return (
-    <>
-      <AuthForm />
-    </>
-  );
+  return <RegisterView />;
 };
 
 export default RegisterPage;

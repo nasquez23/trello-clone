@@ -1,14 +1,14 @@
 "use client";
 
-import { updateUserProfile, verifyUserEmail } from "@/lib/auth";
+import { updateUserProfile, verifyUserEmail } from "@/api/auth";
 import { auth } from "@/lib/firebase";
 import { Box, Typography, Paper, TextField, Button } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "@/components/loading-spinner";
 import { CancelRounded, CheckCircle } from "@mui/icons-material";
-import ProfileAvatar from "./ProfileAvatar";
+import ProfileAvatar from "./profile-avatar";
 
 const ProfileCard = () => {
   const user = auth.currentUser;

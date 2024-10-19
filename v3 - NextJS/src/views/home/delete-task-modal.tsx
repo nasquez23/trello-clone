@@ -1,4 +1,3 @@
-import { DeleteModalProps } from "@/lib/types";
 import {
   Box,
   Button,
@@ -7,14 +6,21 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "@/components/loading-spinner/loading-spinner";
+
+interface Props {
+  open: boolean;
+  onClose: () => void;
+  handleDeleteTask: () => void;
+  isDeleting: boolean;
+}
 
 const DeleteModal = ({
   open,
   onClose,
   handleDeleteTask,
   isDeleting,
-}: DeleteModalProps) => {
+}: Props) => {
   return (
     <Dialog
       sx={{ borderRadius: "10px", marginBottom: "20%" }}

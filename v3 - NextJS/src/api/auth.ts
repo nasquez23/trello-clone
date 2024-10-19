@@ -8,10 +8,10 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { User } from "./types";
 import { FirebaseError } from "firebase/app";
-import { auth } from "./firebase";
+import { auth } from "@/lib/firebase";
 import { deleteOldProfilePicture, uploadFileToStorage } from "./storage";
+import { User } from "@/types/user";
 
 export const registerUser = async (newUser: User): Promise<void> => {
   try {

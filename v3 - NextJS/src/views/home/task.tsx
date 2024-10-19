@@ -1,17 +1,22 @@
 "use client";
 
-import { deleteTask, updateTaskTitle } from "@/lib/tasks";
-import { TaskProps } from "@/lib/types";
+import { deleteTask, updateTaskTitle } from "@/api/tasks";
 import { Delete, Edit } from "@mui/icons-material";
 import { Box, Button, InputBase, Typography } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
-import LoadingSpinner from "./LoadingSpinner";
-import DeleteModal from "./DeleteModal";
+import LoadingSpinner from "@/components/loading-spinner/loading-spinner";
+import DeleteModal from "./delete-task-modal";
 import { Draggable } from "react-beautiful-dnd";
+import { Task as TaskType } from "@/types/task";
 
-const Task = ({ task, index }: TaskProps) => {
+interface Props {
+  task: TaskType;
+  index: number;
+}
+
+const Task = ({ task, index }: Props) => {
   const [showActionBtns, setShowActionBtns] = useState<boolean>(false);
   const [showEditTaskInput, setShowEditTaskInput] = useState<boolean>(false);
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);

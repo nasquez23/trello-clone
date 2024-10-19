@@ -4,12 +4,12 @@ import { useEffect, useState, MouseEvent } from "react";
 import { auth } from "@/lib/firebase";
 import { Avatar, Typography, Box, Menu, MenuItem } from "@mui/material";
 import { User } from "firebase/auth";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "../loading-spinner/loading-spinner";
 import { useMutation } from "@tanstack/react-query";
-import { signOutUser } from "@/lib/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { signOutUser } from "@/api/auth";
 
 const Header = () => {
   const router = useRouter();

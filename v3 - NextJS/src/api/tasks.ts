@@ -10,10 +10,10 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { auth, db } from "./firebase";
-import { Task } from "./types";
 import { FirebaseError } from "firebase/app";
 import toast from "react-hot-toast";
+import { auth, db } from "@/lib/firebase";
+import { Task } from "@/types/task";
 
 export const fetchTasks = (): Promise<Task[]> => {
   return new Promise((resolve, reject) => {

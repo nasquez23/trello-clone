@@ -1,7 +1,7 @@
 "use client";
 
-import { loginUser, registerUser } from "@/lib/auth";
-import { User } from "@/lib/types";
+import { loginUser, registerUser } from "@/api/auth";
+import { User } from "@/types/user";
 import {
   Box,
   Button,
@@ -16,10 +16,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "@/components/loading-spinner/loading-spinner";
 import toast from "react-hot-toast";
-import GoogleSignInButton from "./GoogleSignInButton";
-import GithubSignInButton from "./GithubSignInButton";
+import GoogleSignInButton from "./google-sign-in-button";
+import GithubSignInButton from "./github-sign-in-button";
 
 const AuthForm = () => {
   const pathname = usePathname();

@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { signInWithGithub } from "@/lib/auth";
+import { signInWithGithub } from "@/api/auth";
 
 const GithubSignInButton = () => {
   const router = useRouter();

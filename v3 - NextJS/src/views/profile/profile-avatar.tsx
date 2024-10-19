@@ -1,11 +1,13 @@
-import { changeProfilePicture } from "@/lib/auth";
+"use client"
+
+import { changeProfilePicture } from "@/api/auth";
 import { auth } from "@/lib/firebase";
 import { CameraAltOutlined } from "@mui/icons-material";
 import { Box, Avatar, Button } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useState, useRef, ChangeEvent } from "react";
 import toast from "react-hot-toast";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "@/components/loading-spinner/loading-spinner";
 
 const ProfileAvatar = () => {
   const [showChangePhotoBtn, setShowChangePhotoBtn] = useState<boolean>(false);

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import React from "react";
-import { QueryProvider } from "@/lib/query-provider";
+import { QueryProvider } from "@/context/query-provider";
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {

@@ -1,4 +1,4 @@
-import { signInWithGoogle } from "@/lib/auth";
+import { signInWithGoogle } from "@/api/auth";
 import { Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";

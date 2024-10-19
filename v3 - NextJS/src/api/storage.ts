@@ -4,8 +4,8 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-import { auth, storage } from "./firebase";
 import { FirebaseError } from "firebase/app";
+import { auth, storage } from "@/lib/firebase";
 
 export const uploadFileToStorage = async (file: File): Promise<string> => {
   const storageRef = ref(

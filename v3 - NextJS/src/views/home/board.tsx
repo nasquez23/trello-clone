@@ -2,16 +2,16 @@
 
 import { Box, Typography } from "@mui/material";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import TaskList from "./TaskList";
-import { fetchTasks, moveTaskBetweenSections } from "@/lib/tasks";
-import { Task } from "@/lib/types";
-import LoadingSpinner from "./LoadingSpinner";
+import TaskList from "./task-list";
+import { fetchTasks, moveTaskBetweenSections } from "@/api/tasks";
+import LoadingSpinner from "@/components/loading-spinner/loading-spinner";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 import toast from "react-hot-toast";
+import { Task } from "@/types/task";
 
 const Board = () => {
   const router = useRouter();

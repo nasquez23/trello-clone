@@ -1,11 +1,5 @@
-import Board from "@/components/Board";
-import Header from "@/components/Header";
+import { HomeView } from "@/views/home";
 
 export default function Home() {
-  return (
-    <>
-      <Header />
-      <Board />
-    </>
-  );
+  return <HomeView />;
 }

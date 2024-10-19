@@ -1,13 +1,17 @@
-import { AddTaskInputProps } from "@/lib/types";
 import { Box, Button, InputBase } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { FormEvent } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { saveTask } from "@/lib/tasks";
+import { saveTask } from "@/api/tasks";
 import toast from "react-hot-toast";
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "@/components/loading-spinner/loading-spinner";
 
-const AddTaskInput = ({ sectionId, hideAddTaskInput }: AddTaskInputProps) => {
+interface Props {
+  sectionId: string;
+  hideAddTaskInput: () => void;
+}
+
+const AddTaskInput = ({ sectionId, hideAddTaskInput }: Props) => {
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
