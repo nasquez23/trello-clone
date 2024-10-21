@@ -20,6 +20,19 @@
   - auth.js for Firebase Auth
 - Added environment variables(for Firebase configuration)
 
+### v3 - NextJS
+
+- Initialized NextJS application
+- Configured folder and file structure according to "Frontend Style Guide" in Handbook with the following folders:
+  - `api` - files that use Firebase functions, such as authentication, data and file storage
+  - `app` - main application folder with the App Router
+  - `components` - contains components that are used in multiple locations
+  - `context` - contains the React Query Provider
+  - `lib` - contains the Firebase configuration
+  - `types` - types that are used in multiple locations
+  - `views` - pages that are used in the App Router, with components that are used in each page
+- Added environment variables(for Firebase configuration)
+
 ## Tasks
 
 ### v1 - Vanilla Javascript
@@ -40,3 +53,13 @@
 - Refactored code to now use module-based Firebase integration
 - Configured ESLint for code quality
 - Implemented task updating and deletion
+
+### v3 - NextJS
+
+- Implemented tasks storage to Firestore, authentication with Firebase Auth similarly to the previous version
+- Implemented data fetching with React Query
+- Added user profile page, where the user can change their name or profile picture(uploaded to Firebase Storage) and send verification email
+- Implemented Google and Github sign in
+- Added loading spinner when a certain action is executing
+- Show toast notifications when a action is completed, either if it's a success or an error
+- Implemented Drag and Drop for moving tasks using React Beautiful DnD
